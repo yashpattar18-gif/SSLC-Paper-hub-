@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSLC Paper Hub</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f5ff;
+  color: #172554;
+}
+
+header {
+  background: linear-gradient(135deg, #102044, #4f46e5, #7c3aed);
+  color: white;
+  text-align: center;
+  padding: 35px 15px;
+}
+
+header h1 {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+header p {
+  color: #dbeafe;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.boards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.board {
+  padding: 22px 10px;
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.board:nth-child(2) {
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+}
+
+.section {
+  display: none;
+  background: white;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 15px;
+}
+
+.section.active {
+  display: block;
+}
+
+.tabs, .years {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.tabs button, .years button {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  background: #eff6ff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tabs button.active,
+.years button.active {
+  background: #2563eb;
+  color: white;
+}
+
+.search {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+th {
+  background: #eff6ff;
+}
+
+.btn {
+  display: inline-block;
+  padding: 9px 12px;
+  margin: 3px;
+  border-radius: 7px;
+  text-decoration: none;
+  color: white;
+  background: #2563eb;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.download {
+  background: #15803d;
+}
+
+.note {
+  margin-top: 15px;
+  background: #fff7ed;
+  color: #9a3412;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #64748b;
+}
+
+@media(max-width:550px) {
+  .boards {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>📚 SSLC Paper Hub</h1>
+  <p>Previous Year & Model Question Papers</p>
+  <p>Study Smart • Practice Better</p>
+</header>
+
+<div class="container">
+
+<h2>Choose Your Board</h2>
+
+<div class="boards">
+  <button class="board" onclick="openBoard('state')">
+    🏫 Karnataka State Board
+  </button>
+
+  <button class="board" onclick="openBoard('cbse')">
+    🎓 CBSE Class 10
+  </button>
+</div>
+
+<div id="state" class="section">
+<h2>Karnataka SSLC</h2>
+
+<div class="tabs">
+  <button class="active" onclick="changeType('state','previous',this)">
+    Previous Papers
+  </button>
+  <button onclick="changeType('state','model',this)">
+    Model Papers
+  </button>
+</div>
+
+<div id="state-previous">
+  <div class="years" id="state-years"></div>
+  <input class="search" placeholder="Search Subject..."
+  oninput="searchSubjects('state-table',this.value)">
+  <div id="state-table"></div>
+</div>
+
+<div id="state-model" style="display:none">
+  <div class="years" id="state-model-years"></div>
+  <input class="search" placeholder="Search Subject..."
+  oninput="searchSubjects('state-model-table',this.value)">
+  <div id="state-model-table"></div>
+</div>
+</div>
+
+<div id="cbse" class="section">
+<h2>CBSE Class 10</h2>
+
+<div class="tabs">
+  <button class="active" onclick="changeType('cbse','previous',this)">
+    Previous Papers
+  </button>
+  <button onclick="changeType('cbse','model',this)">
+    Sample Papers
+  </button>
+</div>
+
+<div id="cbse-previous">
+  <div class="years" id="cbse-years"></div>
+  <input class="search" placeholder="Search Subject..."
+  oninput="searchSubjects('cbse-table',this.value)">
+  <div id="cbse-table"></div>
+</div>
+
+<div id="cbse-model" style="display:none">
+  <div class="years" id="cbse-model-years"></div>
+  <input class="search" placeholder="Search Subject..."
+  oninput="searchSubjects('cbse-model-table',this.value)">
+  <div id="cbse-model-table"></div>
+</div>
+</div>
+
+<p class="note">
+Note: These buttons currently open official source pages.
+Verified direct PDF links can be added later.
+</p>
+
+</div>
+
+<footer>
+© 2026 SSLC Paper Hub ❤️
+</footer>
+
+<script>
+
+const stateSubjects = [
+"Kannada","English","Hindi",
+"Mathematics","Science","Social Science"
+];
+
+const cbseSubjects = [
+"English","Hindi","Mathematics",
+"Science","Social Science"
+];
+
+const links = {
+statePrevious:"https://kseab.karnataka.gov.in/",
+stateModel:"https://kseab.karnataka.gov.in/",
+cbsePrevious:"https://www.cbse.gov.in/cbsenew/question-paper.html",
+cbseModel:"https://www.cbse.gov.in/cbsenew/samplepaper.html"
+};
+
+function openBoard(id) {
+document.querySelectorAll(".section")
+.forEach(s => s.classList.remove("active"));
+
+document.getElementById(id).classList.add("active");
+}
+
+function changeType(board,type,btn) {
+btn.parentElement.querySelectorAll("button")
+.forEach(b => b.classList.remove("active"));
+
+btn.classList.add("active");
+
+document.getElementById(board+"-previous").style.display =
+type==="previous" ? "block" : "none";
+
+document.getElementById(board+"-model").style.display =
+type==="model" ? "block" : "none";
+}
+
+function createTable(subjects,url,year,type) {
+return `
+<table>
+<thead>
+<tr>
+<th>Subject</th>
+<th>${year} - ${type}</th>
+</tr>
+</thead>
+<tbody>
+${subjects.map(subject => `
+<tr>
+<td>${subject}</td>
+<td>
+<a class="btn" target="_blank" href="${url}">
+View Papers
+</a>
+<a class="btn download" target="_blank" href="${url}">
+Download / Source
+</a>
+</td>
+</tr>
+`).join("")}
+</tbody>
+</table>`;
+}
+
+function makeYears(id,years,render) {
+const box = document.getElementById(id);
+
+box.innerHTML = "";
+
+years.forEach((year,index) => {
+const btn = document.createElement("button");
+
+btn.textContent = year;
+
+if(index===0) btn.classList.add("active");
+
+btn.onclick = () => {
+box.querySelectorAll("button")
+.forEach(b => b.classList.remove("active"));
+
+btn.classList.add("active");
+render(year);
+};
+
+box.appendChild(btn);
+});
+
+render(years[0]);
+}
+
+function searchSubjects(id,value) {
+document.querySelectorAll("#"+id+" tbody tr")
+.forEach(row => {
+row.style.display =
+row.cells[0].textContent.toLowerCase()
+.includes(value.toLowerCase()) ? "" : "none";
+});
+}
+
+makeYears("state-years",
+["2026","2025","2024","2023","2022","2021"],
+year => document.getElementById("state-table").innerHTML =
+createTable(stateSubjects,links.statePrevious,year,"Previous"));
+
+makeYears("state-model-years",
+["2026","2025","2024","2023"],
+year => document.getElementById("state-model-table").innerHTML =
+createTable(stateSubjects,links.stateModel,year,"Model"));
+
+makeYears("cbse-years",
+["2026","2025","2024","2023","2022","2021"],
+year => document.getElementById("cbse-table").innerHTML =
+createTable(cbseSubjects,links.cbsePrevious,year,"Previous"));
+
+makeYears("cbse-model-years",
+["2025-26","2024-25","2023-24","2022-23"],
+year => document.getElementById("cbse-model-table").innerHTML =
+createTable(cbseSubjects,links.cbseModel,year,"Sample"));
+
+</script>
+</body>
+</html>
